@@ -1,0 +1,67 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="HBRPractica.Vistas.Login.Register" %>
+
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+
+
+    <title>Loguearse</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="Logincss.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    
+     <asp:PlaceHolder id="Alerta" runat="server" />
+
+  <div class="wrapper fadeInDown">
+  <div id="formContent">
+
+
+    
+
+    <!-- Icono de HBR -->
+    <div class="fadeIn first">
+      <img src="https://media-exp1.licdn.com/dms/image/C4D1BAQFZE9CgHwkWWg/company-background_10000/0?e=2159024400&v=beta&t=uX7eFwT-mv29j4s8rrKQVJEv-YfB-QQPvTEGWIdTSuQ" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Formulario de Loguin -->
+    <form runat="server">
+      <asp:Textbox ID="login" class="fadeIn second" name="login" placeholder="Usuario" runat="server"></asp:Textbox>
+      <asp:Textbox type="password" ID="password" class="fadeIn third" name="login" placeholder="Contraseña" runat="server"></asp:Textbox>
+      <asp:Textbox type="Password" ID="repPassword" class="fadeIn third" name="login" placeholder="Contraseña" runat="server"></asp:Textbox>
+
+       <asp:Button class="fadeIn fourth" Text="Registrarse" onclick="BtnCrear" runat="server"></asp:Button>
+
+         <div style="display: none;">
+            <asp:Button type="button" ID="botonVolver" runat="server" class="btn btn-primary" onclick="BtnVolver"></asp:Button>
+       </div>
+    </form>
+
+    <!-- Boton de volver al loguin -->
+
+    <div id="formFooter">
+      <a class="underlineHover" onclick="Volver()" runat="server" >Ya tengo cuenta</a>
+    </div>
+
+      
+ 
+
+  </div>
+</div>
+
+     <script type="text/javascript">
+       
+         function Volver() {
+             var button = document.getElementById('botonVolver');
+                button.click();
+            }
+        
+     </script>
+</body>
+</html>
