@@ -17,29 +17,46 @@ namespace HBRPractica.Vistas.Categorias
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //Implementación con la clase ServiciosCategorias
-            HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
-
-            //Conexión con la base de datos
-            SqlConnection conexion = new Conexion().Connection();
-            using (conexion)
+            if (Session["autenticacion"] != null)
             {
-                using (SqlCommand cmd = new SqlCommand("CRUDCategoria"))
+                if (Session["autenticacion"].ToString() == "Administrador")
                 {
-                    cmd.Connection = conexion;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@tipo", "Select");
-                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    //Implementación con la clase ServiciosCategorias
+                    HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
+
+                    //Conexión con la base de datos
+                    SqlConnection conexion = new Conexion().Connection();
+                    using (conexion)
                     {
-                        DataTable dt = new DataTable();
-                        sda.Fill(dt);
+                        using (SqlCommand cmd = new SqlCommand("CRUDCategoria"))
+                        {
+                            cmd.Connection = conexion;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@tipo", "Select");
+                            using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                            {
+                                DataTable dt = new DataTable();
+                                sda.Fill(dt);
 
-                        StringBuilder html = servicios.obtenerTablaAdministrador(dt);
+                                StringBuilder html = servicios.obtenerTablaAdministrador(dt);
 
-                        PlaceHolderCategoria.Controls.Add(new Literal { Text = html.ToString() });
+                                PlaceHolderCategoria.Controls.Add(new Literal { Text = html.ToString() });
+                            }
+                        }
                     }
                 }
+                else
+                {
+                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                }
+
             }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
+            }
+
+            
 
 
         }

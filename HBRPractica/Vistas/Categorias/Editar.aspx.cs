@@ -14,12 +14,29 @@ namespace HBRPractica.Vistas.Categorias
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+
+            if (Session["autenticacion"] != null)
             {
-                inputID.Value = Session["id"].ToString();
-                inputNombre.Value = Session["nombre"].ToString();
-                inputDescripcion.Value = Session["descripcion"].ToString();
+                if (Session["autenticacion"].ToString() == "Administrador")
+                {
+                    if (!Page.IsPostBack)
+                    {
+                        inputID.Value = Session["id"].ToString();
+                        inputNombre.Value = Session["nombre"].ToString();
+                        inputDescripcion.Value = Session["descripcion"].ToString();
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                }
+
             }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
+            }
+       
 
 
 

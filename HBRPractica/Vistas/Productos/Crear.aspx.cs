@@ -14,19 +14,36 @@ namespace HBRPractica.Vistas.Productos
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            if (Session["autenticacion"] != null)
             {
-                inputIdCat.DataSource = GetItems();
-                inputIdCat.DataTextField = "ID";
-                inputIdCat.DataValueField = "ID";
-                inputIdCat.DataBind();
+                if (Session["autenticacion"].ToString() == "Administrador")
+                {
+                    if (!Page.IsPostBack)
+                    {
+                        inputIdCat.DataSource = GetItems();
+                        inputIdCat.DataTextField = "ID";
+                        inputIdCat.DataValueField = "ID";
+                        inputIdCat.DataBind();
 
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                }
+
+            }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
             }
 
         }
 
         protected void BtnCrear(object sender, EventArgs e)
         {
+
+
             //Conexión a la base de datos.
             SqlConnection conexion = new Conexion().Connection();
             conexion.Open();

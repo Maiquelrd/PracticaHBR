@@ -16,29 +16,46 @@ namespace HBRPractica.Vistas.Productos
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //Implementación con la clase ServiciosVarios
-            HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
-
-            //Conexión con la base de datos
-            SqlConnection conexion = new Conexion().Connection();
-            using (conexion)
+            if (Session["autenticacion"] != null)
             {
-                using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
+                if (Session["autenticacion"].ToString() == "Administrador")
                 {
-                    cmd.Connection = conexion;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@tipo", "Select");
-                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
+                }
+                else
+                {
+
+                    //Implementación con la clase ServiciosVarios
+                    HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
+
+                    //Conexión con la base de datos
+                    SqlConnection conexion = new Conexion().Connection();
+                    using (conexion)
                     {
-                        DataTable dt = new DataTable();
-                        sda.Fill(dt);
+                        using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
+                        {
+                            cmd.Connection = conexion;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@tipo", "Select");
+                            using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                            {
+                                DataTable dt = new DataTable();
+                                sda.Fill(dt);
 
-                        StringBuilder html = servicios.obtenerTabla(dt);
+                                StringBuilder html = servicios.obtenerTabla(dt);
 
-                        PlaceHolderProductos.Controls.Add(new Literal { Text = html.ToString() });
+                                PlaceHolderProductos.Controls.Add(new Literal { Text = html.ToString() });
+                            }
+                        }
                     }
                 }
             }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
+            }
+
+            
 
 
         }

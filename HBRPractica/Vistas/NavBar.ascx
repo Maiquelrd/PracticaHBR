@@ -5,13 +5,13 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="liProducto" runat="server">
-                <a class="nav-link" onclick="document.location='/Vistas/Productos/Lista'">Productos</a>
+                <a class="nav-link" runat="server" href="~/Vistas/Productos/Lista">Productos</a>
             </li>
             <li class="nav-item" id="liCategoria" runat="server">
-                <a class="nav-link" onclick="document.location='/Vistas/Categorias/Lista'">Categorías</a>
+                <a class="nav-link" runat="server" href="~/Vistas/Categorias/Lista">Categorías</a>
             </li>
-            <li class="nav-item" id="liUsuario" runat="server">
-                <a class="nav-link" onclick="document.location='/Vistas/Usuarios/Lista'">Usuarios</a>
+            <li class="nav-item" id="liUsuario" runat="server" >
+                <a class="nav-link" runat="server" href="~/Vistas/Usuarios/Lista.aspx">Usuarios</a>
             </li>
         </ul>
     </div>
@@ -24,7 +24,7 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" onclick="document.location='/Vistas/Login/Login'">Cerrar sesión</a>
+                <a class="nav-link" runat="server" href="~/Vistas/Login/Login">Cerrar sesión</a>
             </li>
         </ul>
     </div>

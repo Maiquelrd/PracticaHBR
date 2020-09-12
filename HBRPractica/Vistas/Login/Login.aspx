@@ -35,28 +35,16 @@
       
        <asp:Button class="fadeIn fourth" Text="Loguearse" onclick="BtnLoguear" runat="server"></asp:Button>
 
-         <div style="display: none;">
-            <asp:Button type="button" ID="botonRegistro" runat="server" class="btn btn-primary" onclick="BtnRegistro"></asp:Button>
-       </div>
     </form>
 
      <!-- Boton de registro -->
 
     <div id="formFooter">
-      <a class="underlineHover" onclick="Registro()" runat="server" >Registrarse</a>
+      <a class="underlineHover" runat="server" href="~/Vistas/Login/Register.aspx">Registrarse</a>
     </div>
 
   </div>
 </div>
 
-    
-     <script type="text/javascript">
-       
-         function Registro() {
-             var button = document.getElementById('botonRegistro');
-                button.click();
-            }
-        
-     </script>
 </body>
 </html>

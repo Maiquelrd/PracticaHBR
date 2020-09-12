@@ -15,7 +15,12 @@ namespace HBRPractica
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                Session["autenticacion"] = null;
 
+            }
+            
         }
 
         protected void BtnLoguear(object sender, EventArgs e)
@@ -34,10 +39,12 @@ namespace HBRPractica
                 bool resultado2 = servicios.getUsuario<bool>(login.Text, password.Text, conexion, "ValidarAdmin");
                 if (resultado2 == true)
                 {
+                    Session["autenticacion"] = "Administrador";
                     Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
                 else
                 {
+                    Session["autenticacion"] = "Usuario";
                     Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
                 }
             }
@@ -48,11 +55,6 @@ namespace HBRPractica
                 Alerta.Controls.Add(new Literal { Text = html.ToString() });
             }
             conexion.Close();
-        }
-
-        protected void BtnRegistro(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Vistas/Login/Register.aspx");
         }
     }
 }

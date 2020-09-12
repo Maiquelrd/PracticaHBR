@@ -55,14 +55,6 @@ namespace HBRPractica.Vistas.Login
             
         }
 
-        protected void BtnVolver(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Vistas/Login/Login.aspx");
-        }
-
-
-
-
 
     }
 }

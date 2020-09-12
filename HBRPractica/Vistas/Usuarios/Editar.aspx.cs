@@ -13,13 +13,30 @@ namespace HBRPractica.Vistas.Usuarios
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+
+            if (Session["autenticacion"] != null)
             {
-                inputID.Value = Session["id"].ToString();
-                inputUser.Value = Session["usuario"].ToString();
-                inputPassword.Value = Session["contraseña"].ToString();
-                checkAdmin.Checked = Session["admin"].ToString() == "True" ? true : false;
+                if (Session["autenticacion"].ToString() == "Administrador")
+                {
+                    if (!Page.IsPostBack)
+                    {
+                        inputID.Value = Session["id"].ToString();
+                        inputUser.Value = Session["usuario"].ToString();
+                        inputPassword.Value = Session["contraseña"].ToString();
+                        checkAdmin.Checked = Session["admin"].ToString() == "True" ? true : false;
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                }
+
             }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
+            }
+           
             
 
 

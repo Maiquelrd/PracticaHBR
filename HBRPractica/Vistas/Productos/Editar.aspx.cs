@@ -14,17 +14,33 @@ namespace HBRPractica.Vistas.Productos
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                inputID.Value = Session["id"].ToString();
-                inputNombre.Value = Session["nombre"].ToString();
-                inputDescripcion.Value = Session["descripcion"].ToString();
-                inputPrecio.Value = Session["precio"].ToString();
 
-                inputIdCat.DataSource = GetItems();
-                inputIdCat.DataTextField = "ID";
-                inputIdCat.DataValueField = "ID";
-                inputIdCat.DataBind();
+            if (Session["autenticacion"] != null)
+            {
+                if (Session["autenticacion"].ToString() == "Administrador")
+                {
+                    if (!Page.IsPostBack)
+                    {
+                        inputID.Value = Session["id"].ToString();
+                        inputNombre.Value = Session["nombre"].ToString();
+                        inputDescripcion.Value = Session["descripcion"].ToString();
+                        inputPrecio.Value = Session["precio"].ToString();
+
+                        inputIdCat.DataSource = GetItems();
+                        inputIdCat.DataTextField = "ID";
+                        inputIdCat.DataValueField = "ID";
+                        inputIdCat.DataBind();
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                }
+
+            }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
             }
 
 

@@ -13,6 +13,22 @@ namespace HBRPractica.Vistas.Login
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["autenticacion"] != null)
+            {
+                if (Session["autenticacion"].ToString() == "Administrador")
+                {
+
+                }
+                else
+                {
+                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                }
+
+            }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
+            }
 
         }
 

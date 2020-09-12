@@ -38,15 +38,12 @@
 
        <asp:Button class="fadeIn fourth" Text="Registrarse" onclick="BtnCrear" runat="server"></asp:Button>
 
-         <div style="display: none;">
-            <asp:Button type="button" ID="botonVolver" runat="server" class="btn btn-primary" onclick="BtnVolver"></asp:Button>
-       </div>
     </form>
 
     <!-- Boton de volver al loguin -->
 
     <div id="formFooter">
-      <a class="underlineHover" onclick="Volver()" runat="server" >Ya tengo cuenta</a>
+      <a class="underlineHover" runat="server" href="~/Vistas/Login/Login.aspx">Ya tengo cuenta</a>
     </div>
 
       
@@ -55,13 +52,5 @@
   </div>
 </div>
 
-     <script type="text/javascript">
-       
-         function Volver() {
-             var button = document.getElementById('botonVolver');
-                button.click();
-            }
-        
-     </script>
 </body>
 </html>
