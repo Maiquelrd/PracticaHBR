@@ -51,16 +51,16 @@ namespace HBRPractica.Services
             return html;
         }
 
-        public bool crearCategoria(string parametro1, string parametro2, SqlConnection conn, string procedure)
+        public bool crearCategoria(string nombre, string descripcion, SqlConnection conn, string procedure)
         {
-            if ((parametro1 != "") && (parametro2 != ""))
+            if ((nombre != "") && (descripcion != ""))
             {
 
                 SqlCommand comando = new SqlCommand(procedure, conn);
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.AddWithValue("@Tipo", "Insert");
-                comando.Parameters.AddWithValue("@Nombre", parametro1);
-                comando.Parameters.AddWithValue("@Descripcion", parametro2);
+                comando.Parameters.AddWithValue("@Nombre", nombre);
+                comando.Parameters.AddWithValue("@Descripcion", descripcion);
                 
                 comando.ExecuteNonQuery();
 
@@ -75,17 +75,17 @@ namespace HBRPractica.Services
 
         }
 
-        public bool editarCategoria(string parametro1, string parametro2, int parametro3, SqlConnection conn, string procedure)
+        public bool editarCategoria(string nombre, string descripcion, int id, SqlConnection conn, string procedure)
         {
-            if ((parametro1 != "") && (parametro2 != ""))
+            if ((nombre != "") && (descripcion != ""))
             {
 
                 SqlCommand comando = new SqlCommand(procedure, conn);
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.AddWithValue("@Tipo", "Update");
-                comando.Parameters.AddWithValue("@Nombre", parametro1);
-                comando.Parameters.AddWithValue("@Descripcion", parametro2);
-                comando.Parameters.AddWithValue("@id", parametro3);
+                comando.Parameters.AddWithValue("@Nombre", nombre);
+                comando.Parameters.AddWithValue("@Descripcion", descripcion);
+                comando.Parameters.AddWithValue("@id", id);
                 comando.ExecuteNonQuery();
                 return true;
             }
@@ -93,6 +93,17 @@ namespace HBRPractica.Services
             {
                 return false;
             }
+
+
+        }
+
+        public void borrarCategoria(int id, SqlConnection conn, string procedure)
+        {
+            SqlCommand comando = new SqlCommand(procedure, conn);
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@Tipo", "Delete");
+            comando.Parameters.AddWithValue("@id", id);
+            comando.ExecuteNonQuery();
 
 
         }

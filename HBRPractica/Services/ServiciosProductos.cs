@@ -88,18 +88,18 @@ namespace HBRPractica.Services
             return html;
         }
 
-        public bool crearProducto(string parametro1, string parametro2, int parametro3, decimal parametro4, SqlConnection conn, string procedure)
+        public bool crearProducto(string nombre, string descripcion, int idCategoria, decimal precio, SqlConnection conn, string procedure)
         {
-            if ((parametro1 != "") && (parametro2 != ""))
+            if ((nombre != "") && (descripcion != ""))
             {
 
                 SqlCommand comando = new SqlCommand(procedure, conn);
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.AddWithValue("@Tipo", "Insert");
-                comando.Parameters.AddWithValue("@Nombre", parametro1);
-                comando.Parameters.AddWithValue("@Descripcion", parametro2);
-                comando.Parameters.AddWithValue("@idCat", parametro3);
-                comando.Parameters.AddWithValue("@Precio", parametro4);
+                comando.Parameters.AddWithValue("@Nombre", nombre);
+                comando.Parameters.AddWithValue("@Descripcion", descripcion);
+                comando.Parameters.AddWithValue("@idCat", idCategoria);
+                comando.Parameters.AddWithValue("@Precio", precio);
 
                 comando.ExecuteNonQuery();
 
@@ -114,19 +114,19 @@ namespace HBRPractica.Services
 
         }
 
-        public bool editarProducto(string parametro1, string parametro2, int parametro3, int parametro4, decimal parametro5, SqlConnection conn, string procedure)
+        public bool editarProducto(string nombre, string descripcion, int id, int idCategoria, decimal precio, SqlConnection conn, string procedure)
         {
-            if ((parametro1 != "") && (parametro2 != ""))
+            if ((nombre != "") && (descripcion != ""))
             {
 
                 SqlCommand comando = new SqlCommand(procedure, conn);
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.AddWithValue("@Tipo", "Update");
-                comando.Parameters.AddWithValue("@Nombre", parametro1);
-                comando.Parameters.AddWithValue("@Descripcion", parametro2);
-                comando.Parameters.AddWithValue("@id", parametro3);
-                comando.Parameters.AddWithValue("@idCat", parametro4);
-                comando.Parameters.AddWithValue("@Precio", parametro5);
+                comando.Parameters.AddWithValue("@Nombre", nombre);
+                comando.Parameters.AddWithValue("@Descripcion", descripcion);
+                comando.Parameters.AddWithValue("@id", id);
+                comando.Parameters.AddWithValue("@idCat", idCategoria);
+                comando.Parameters.AddWithValue("@Precio", precio);
                 comando.ExecuteNonQuery();
                 return true;
             }
@@ -134,6 +134,17 @@ namespace HBRPractica.Services
             {
                 return false;
             }
+
+
+        }
+
+        public void borrarProducto(int id, SqlConnection conn, string procedure)
+        {
+            SqlCommand comando = new SqlCommand(procedure, conn);
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@Tipo", "Delete");
+            comando.Parameters.AddWithValue("@id", id);
+            comando.ExecuteNonQuery();
 
 
         }

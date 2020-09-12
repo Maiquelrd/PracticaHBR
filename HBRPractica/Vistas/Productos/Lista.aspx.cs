@@ -20,12 +20,13 @@ namespace HBRPractica.Vistas.Productos
             HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
 
             //Conexión con la base de datos
-            string constr = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(constr))
+            SqlConnection conexion = new Conexion().Connection();
+
+            using (conexion)
             {
                 using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
                 {
-                    cmd.Connection = con;
+                    cmd.Connection = conexion;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@tipo", "Select");
                     using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
@@ -55,16 +56,14 @@ namespace HBRPractica.Vistas.Productos
         protected void BtnBorrar(object sender, EventArgs e)
         {
             //Conexión a la base de datos.
-            SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            conexión.Open();
+            SqlConnection conexion = new Conexion().Connection();
+            conexion.Open();
 
-            //Implementación con la clase ServiciosVarios
-            HBRPractica.Services.ServiciosVarios servicios = new HBRPractica.Services.ServiciosVarios();
+            //Implementación con la clase ServiciosProductos
+            HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
+            servicios.borrarProducto(Convert.ToInt32(elementoID.Value), conexion, "CRUDProducto");
 
-
-            servicios.borrarElemento(Convert.ToInt32(elementoID.Value), conexión, "CRUDProducto");
-
-            conexión.Close();
+            conexion.Close();
 
             Response.Redirect("~/Vistas/Productos/Lista.aspx");
         }

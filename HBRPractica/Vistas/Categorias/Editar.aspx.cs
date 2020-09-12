@@ -11,6 +11,7 @@ namespace HBRPractica.Vistas.Categorias
 {
     public partial class Editar : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -27,16 +28,16 @@ namespace HBRPractica.Vistas.Categorias
         protected void BtnConfirmar(object sender, EventArgs e)
         {
             //Conexión a la base de datos.
-            SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            conexión.Open();
+            SqlConnection conexion = new Conexion().Connection();
+            conexion.Open();
 
             //Implementación con la clase ServiciosVarios
             HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
 
 
-            bool respuesta = servicios.editarCategoria(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), conexión, "CRUDCategoria");
+            bool respuesta = servicios.editarCategoria(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), conexion, "CRUDCategoria");
 
-            conexión.Close();
+            conexion.Close();
             if (respuesta)
             {
                 Response.Redirect("~/Vistas/Categorias/Lista.aspx");

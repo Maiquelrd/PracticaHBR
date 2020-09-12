@@ -28,16 +28,16 @@ namespace HBRPractica.Vistas.Usuarios
         protected void BtnConfirmar(object sender, EventArgs e)
         {
             //Conexión a la base de datos.
-            SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            conexión.Open();
+            SqlConnection conexion = new Conexion().Connection();
+            conexion.Open();
 
             //Implementación con la clase ServiciosVarios
             HBRPractica.Services.ServiciosUsuarios servicios = new HBRPractica.Services.ServiciosUsuarios();
 
 
-            bool respuesta = servicios.editarUsuario(inputUser.Value, inputPassword.Value, checkAdmin, Convert.ToInt32(inputID.Value) ,  conexión, "CRUDUsuario");
+            bool respuesta = servicios.editarUsuario(inputUser.Value, inputPassword.Value, checkAdmin, Convert.ToInt32(inputID.Value) , conexion, "CRUDUsuario");
 
-            conexión.Close();
+            conexion.Close();
             if (respuesta)
             {
                 Response.Redirect("~/Vistas/Usuarios/Lista.aspx");

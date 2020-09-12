@@ -34,16 +34,16 @@ namespace HBRPractica.Vistas.Productos
         protected void BtnConfirmar(object sender, EventArgs e)
         {
             //Conexión a la base de datos.
-            SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            conexión.Open();
+            SqlConnection conexion = new Conexion().Connection();
+            conexion.Open();
 
             //Implementación con la clase ServiciosVarios
             HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
 
 
-            bool respuesta = servicios.editarProducto(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), Convert.ToInt32(Request.Form["inputIdCat"]),Convert.ToDecimal(inputPrecio.Value) , conexión, "CRUDProducto");
+            bool respuesta = servicios.editarProducto(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), Convert.ToInt32(Request.Form["inputIdCat"]),Convert.ToDecimal(inputPrecio.Value) , conexion, "CRUDProducto");
 
-            conexión.Close();
+            conexion.Close();
             if (respuesta)
             {
                 Response.Redirect("~/Vistas/Productos/Lista.aspx");
@@ -65,16 +65,16 @@ namespace HBRPractica.Vistas.Productos
 
         public DataSet GetItems()
         {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            SqlCommand cmd = new SqlCommand("ObtenerCategoriasID", con);
+            SqlConnection conexion = new Conexion().Connection();
+            SqlCommand cmd = new SqlCommand("ObtenerCategoriasID", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             try
             {
-                con.Open();
+                conexion.Open();
                 da.Fill(ds);
-                con.Close();
+                conexion.Close();
             }
             catch (Exception ex)
             {

@@ -13,6 +13,7 @@ namespace HBRPractica.Vistas.Categorias
 {
     public partial class Lista : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -20,12 +21,12 @@ namespace HBRPractica.Vistas.Categorias
             HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
 
             //Conexión con la base de datos
-            string constr = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(constr))
+            SqlConnection conexion = new Conexion().Connection();
+            using (conexion)
             {
                 using (SqlCommand cmd = new SqlCommand("CRUDCategoria"))
                 {
-                    cmd.Connection = con;
+                    cmd.Connection = conexion;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@tipo", "Select");
                     using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
@@ -45,8 +46,6 @@ namespace HBRPractica.Vistas.Categorias
 
         protected void BtnCrear(object sender, EventArgs e)
         {
-
-
             Response.Redirect("~/Vistas/Categorias/Crear.aspx");
         }
 
@@ -54,17 +53,16 @@ namespace HBRPractica.Vistas.Categorias
 
         protected void BtnBorrar(object sender, EventArgs e)
         {
-            //Conexión a la base de datos.
-            SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            conexión.Open();
+            //Conexión con la base de datos
+            SqlConnection conexion = new Conexion().Connection();
+            conexion.Open();
 
-            //Implementación con la clase ServiciosVarios
-            HBRPractica.Services.ServiciosVarios servicios = new HBRPractica.Services.ServiciosVarios();
+            //Implementación con la clase ServiciosCategorías
+            HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
+            servicios.borrarCategoria(Convert.ToInt32(elementoID.Value), conexion, "CRUDCategoria");
 
 
-            servicios.borrarElemento(Convert.ToInt32(elementoID.Value), conexión, "CRUDCategoria");
-
-            conexión.Close();
+            conexion.Close();
 
             Response.Redirect("~/Vistas/Categorias/Lista.aspx");
         }

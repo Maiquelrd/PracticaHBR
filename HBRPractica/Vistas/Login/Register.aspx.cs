@@ -23,17 +23,17 @@ namespace HBRPractica.Vistas.Login
             if(password.Text == repPassword.Text)
             {
                 //Conexión a la base de datos.
-                SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-                conexión.Open();
+                SqlConnection conexion = new Conexion().Connection();
+                conexion.Open();
 
-                //Implementación con la clase ServiciosVarios
+                //Implementación con la clase ServiciosUsuarios
                 HBRPractica.Services.ServiciosUsuarios servicios = new HBRPractica.Services.ServiciosUsuarios();
                 System.Web.UI.HtmlControls.HtmlInputCheckBox checkAdmin = new System.Web.UI.HtmlControls.HtmlInputCheckBox();
 
 
-                bool respuesta = servicios.crearUsuario(login.Text, password.Text, checkAdmin, conexión, "CRUDUsuario");
+                bool respuesta = servicios.crearUsuario(login.Text, password.Text, checkAdmin, conexion, "CRUDUsuario");
 
-                conexión.Close();
+                conexion.Close();
 
                 if (respuesta)
                 {

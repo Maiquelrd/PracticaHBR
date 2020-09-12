@@ -21,19 +21,17 @@ namespace HBRPractica
         protected void BtnLoguear(object sender, EventArgs e)
         {
             //Conexión a la base de datos.
-            SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            conexión.Open();
+            SqlConnection conexion = new Conexion().Connection();
+            conexion.Open();
 
-            //Implementación con la clase ServiciosVarios
-            HBRPractica.Services.ServiciosVarios servicios = new HBRPractica.Services.ServiciosVarios();
-
-
-            int resultado = servicios.getResultado<int>(login.Text, password.Text, conexión, "ProcLoguear");
+            //Implementación con la clase ServiciosLogin
+            HBRPractica.Services.ServiciosLogin servicios = new HBRPractica.Services.ServiciosLogin();
+            int resultadoUsuario = servicios.getUsuario<int>(login.Text, password.Text, conexion, "ProcLoguear");
 
 
-            if(resultado >= 1)
+            if(resultadoUsuario >= 1)
             {
-                bool resultado2 = servicios.getResultado<bool>(login.Text, password.Text, conexión, "ValidarAdmin");
+                bool resultado2 = servicios.getUsuario<bool>(login.Text, password.Text, conexion, "ValidarAdmin");
                 if (resultado2 == true)
                 {
                     Response.Redirect("~/Vistas/Productos/Lista.aspx");
@@ -49,7 +47,7 @@ namespace HBRPractica
                 html.Append("<div class='alert alert-danger' role='alert'> El usuario o contraseña son incorrectas o hubo un problema</div>");
                 Alerta.Controls.Add(new Literal { Text = html.ToString() });
             }
-            conexión.Close();
+            conexion.Close();
         }
 
         protected void BtnRegistro(object sender, EventArgs e)

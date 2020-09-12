@@ -11,6 +11,8 @@ namespace HBRPractica.Vistas.Categorias
 {
     public partial class Crear : System.Web.UI.Page
     {
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -19,16 +21,16 @@ namespace HBRPractica.Vistas.Categorias
         protected void BtnCrear(object sender, EventArgs e)
         {
             //Conexión a la base de datos.
-            SqlConnection conexión = new SqlConnection(ConfigurationManager.ConnectionStrings["ConString"].ConnectionString);
-            conexión.Open();
+            SqlConnection conexion = new Conexion().Connection();
+            conexion.Open();
 
             //Implementación con la clase ServiciosVarios
             HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
 
 
-            bool respuesta = servicios.crearCategoria(inputNombre.Value, inputDescripcion.Value, conexión, "CRUDCategoria");
+            bool respuesta = servicios.crearCategoria(inputNombre.Value, inputDescripcion.Value, conexion, "CRUDCategoria");
 
-            conexión.Close();
+            conexion.Close();
 
             if (respuesta)
             {

@@ -20,12 +20,12 @@ namespace HBRPractica.Vistas.Productos
             HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
 
             //Conexión con la base de datos
-            string constr = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(constr))
+            SqlConnection conexion = new Conexion().Connection();
+            using (conexion)
             {
                 using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
                 {
-                    cmd.Connection = con;
+                    cmd.Connection = conexion;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@tipo", "Select");
                     using (SqlDataAdapter sda = new SqlDataAdapter(cmd))

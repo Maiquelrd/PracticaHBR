@@ -173,10 +173,11 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Conexion.cs" />
     <Compile Include="Services\SericiosCategorias.cs" />
+    <Compile Include="Services\ServiciosLogin.cs" />
     <Compile Include="Services\ServiciosProductos.cs" />
     <Compile Include="Services\ServiciosUsuarios.cs" />
-    <Compile Include="Services\ServiciosVarios.cs" />
     <Compile Include="Vistas\Categorias\Crear.aspx.cs">
       <DependentUpon>Crear.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

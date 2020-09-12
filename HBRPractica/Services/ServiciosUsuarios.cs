@@ -52,13 +52,13 @@ namespace HBRPractica.Services
             return html;
         }
 
-        public bool crearUsuario(string parametro1, string parametro2, System.Web.UI.HtmlControls.HtmlInputCheckBox parametro3, SqlConnection conn, string procedure)
+        public bool crearUsuario(string usuario, string password, System.Web.UI.HtmlControls.HtmlInputCheckBox esAdmin, SqlConnection conn, string procedure)
         {
-            if ((parametro1 != "") && (parametro2 != "") && (parametro3 != null))
+            if ((usuario != "") && (password != ""))
             {
                 SqlCommand comando = new SqlCommand("ValidarUsuario", conn);
                 comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.AddWithValue("@usuario", parametro1);
+                comando.Parameters.AddWithValue("@usuario", usuario);
                 int resultado = (Int32)comando.ExecuteScalar();
                 if (resultado > 0)
                 {
@@ -69,9 +69,9 @@ namespace HBRPractica.Services
                     comando = new SqlCommand(procedure, conn);
                     comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.AddWithValue("@Tipo", "Insert");
-                    comando.Parameters.AddWithValue("@Usuario", parametro1);
-                    comando.Parameters.AddWithValue("@Contraseña", parametro2);
-                    if (parametro3.Checked)
+                    comando.Parameters.AddWithValue("@Usuario", usuario);
+                    comando.Parameters.AddWithValue("@Contraseña", password);
+                    if (esAdmin.Checked)
                     {
                         comando.Parameters.AddWithValue("@Admin", 1);
                     }
@@ -91,18 +91,18 @@ namespace HBRPractica.Services
 
         }
 
-        public bool editarUsuario(string parametro1, string parametro2, System.Web.UI.HtmlControls.HtmlInputCheckBox parametro3, int parametro4, SqlConnection conn, string procedure)
+        public bool editarUsuario(string usuario, string password, System.Web.UI.HtmlControls.HtmlInputCheckBox esAdmin, int id, SqlConnection conn, string procedure)
         {
-            if ((parametro1 != "") && (parametro2 != "") && (parametro3 != null))
+            if ((usuario != "") && (password != ""))
             {
 
                 SqlCommand comando = new SqlCommand(procedure, conn);
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.AddWithValue("@Tipo", "Update");
-                comando.Parameters.AddWithValue("@Usuario", parametro1);
-                comando.Parameters.AddWithValue("@Contraseña", parametro2);
-                comando.Parameters.AddWithValue("@id", parametro4);
-                if (parametro3.Checked)
+                comando.Parameters.AddWithValue("@Usuario", usuario);
+                comando.Parameters.AddWithValue("@Contraseña", password);
+                comando.Parameters.AddWithValue("@id", id);
+                if (esAdmin.Checked)
                 {
                     comando.Parameters.AddWithValue("@Admin", 1);
                 }
@@ -117,6 +117,17 @@ namespace HBRPractica.Services
             {
                 return false;
             }
+
+
+        }
+
+        public void borrarUsuario(int id, SqlConnection conn, string procedure)
+        {
+            SqlCommand comando = new SqlCommand(procedure, conn);
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@Tipo", "Delete");
+            comando.Parameters.AddWithValue("@id", id);
+            comando.ExecuteNonQuery();
 
 
         }
