@@ -20,10 +20,10 @@ namespace HBRPractica.Vistas.Usuarios
                 {
                     if (!Page.IsPostBack)
                     {
-                        inputID.Value = Session["id"].ToString();
-                        inputUser.Value = Session["usuario"].ToString();
-                        inputPassword.Value = Session["contraseña"].ToString();
-                        checkAdmin.Checked = Session["admin"].ToString() == "True" ? true : false;
+                        inputID.Value = ViewState["id"].ToString();
+                        inputUser.Value = ViewState["usuario"].ToString();
+                        inputPassword.Value = ViewState["contraseña"].ToString();
+                        checkAdmin.Checked = ViewState["admin"].ToString() == "True" ? true : false;
                     }
                 }
                 else

@@ -88,9 +88,9 @@ namespace HBRPractica.Vistas.Categorias
         {
             string[] datos = elementoID.Value.Split('♥');
 
-            Session["id"] = datos[0];
-            Session["nombre"] = datos[1];
-            Session["descripcion"] = datos[2];
+            ViewState["id"] = datos[0];
+            ViewState["nombre"] = datos[1];
+            ViewState["descripcion"] = datos[2];
 
 
             Response.Redirect("~/Vistas/Categorias/Editar.aspx");

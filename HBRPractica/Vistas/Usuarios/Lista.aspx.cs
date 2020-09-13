@@ -91,10 +91,10 @@ namespace HBRPractica.Vistas.Usuarios
         {
             string[] datos = elementoID.Value.Split('♥');
 
-            Session["id"] = datos[0];
-            Session["usuario"] = datos[1];
-            Session["contraseña"] = datos[2];
-            Session["admin"] = datos[3];
+            ViewState["id"] = datos[0];
+            ViewState["usuario"] = datos[1];
+            ViewState["contraseña"] = datos[2];
+            ViewState["admin"] = datos[3];
 
 
             Response.Redirect("~/Vistas/Usuarios/Editar.aspx");

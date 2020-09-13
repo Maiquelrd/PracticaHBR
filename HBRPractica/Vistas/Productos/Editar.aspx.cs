@@ -21,10 +21,10 @@ namespace HBRPractica.Vistas.Productos
                 {
                     if (!Page.IsPostBack)
                     {
-                        inputID.Value = Session["id"].ToString();
-                        inputNombre.Value = Session["nombre"].ToString();
-                        inputDescripcion.Value = Session["descripcion"].ToString();
-                        inputPrecio.Value = Session["precio"].ToString();
+                        inputID.Value = ViewState["id"].ToString();
+                        inputNombre.Value = ViewState["nombre"].ToString();
+                        inputDescripcion.Value = ViewState["descripcion"].ToString();
+                        inputPrecio.Value = ViewState["precio"].ToString();
 
                         inputIdCat.DataSource = GetItems();
                         inputIdCat.DataTextField = "ID";

@@ -86,11 +86,11 @@ namespace HBRPractica.Vistas.Productos
         {
             string[] datos = elementoID.Value.Split('♥');
 
-            Session["id"] = datos[0];
-            Session["idcat"] = datos[1];
-            Session["nombre"] = datos[2];
-            Session["descripcion"] = datos[3];
-            Session["precio"] = datos[4];
+            ViewState["id"] = datos[0];
+            ViewState["idcat"] = datos[1];
+            ViewState["nombre"] = datos[2];
+            ViewState["descripcion"] = datos[3];
+            ViewState["precio"] = datos[4];
 
 
             Response.Redirect("~/Vistas/Productos/Editar.aspx");

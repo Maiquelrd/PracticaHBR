@@ -21,9 +21,9 @@ namespace HBRPractica.Vistas.Categorias
                 {
                     if (!Page.IsPostBack)
                     {
-                        inputID.Value = Session["id"].ToString();
-                        inputNombre.Value = Session["nombre"].ToString();
-                        inputDescripcion.Value = Session["descripcion"].ToString();
+                        inputID.Value = ViewState["id"].ToString();
+                        inputNombre.Value = ViewState["nombre"].ToString();
+                        inputDescripcion.Value = ViewState["descripcion"].ToString();
                     }
                 }
                 else
