@@ -17,15 +17,14 @@ namespace HBRPractica.Vistas.Categorias
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if(!Page.IsPostBack)
-            {
 
-                if (Session["autenticacion"] != null)
+            if (Session["autenticacion"] != null)
+            {
+                if (Session["autenticacion"].ToString() == "Administrador")
                 {
-                    if (Session["autenticacion"].ToString() == "Administrador")
+
+                    if (!Page.IsPostBack)
                     {
-                        //Implementación con la clase ServiciosCategorias
-                        HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
 
                         //Conexión con la base de datos
                         SqlConnection conexion = new Conexion().Connection();
@@ -41,27 +40,27 @@ namespace HBRPractica.Vistas.Categorias
                                     DataTable dt = new DataTable();
                                     sda.Fill(dt);
 
-                                    StringBuilder html = servicios.obtenerTablaAdministrador(dt);
+                                    GridviewCategoria.DataSource = dt;
+                                    GridviewCategoria.DataBind();
 
-                                    PlaceHolderCategoria.Controls.Add(new Literal { Text = html.ToString() });
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
                     }
 
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Login/Login.aspx");
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
 
-
-
             }
+            else
+            {
+                Response.Redirect("~/Vistas/Login/Login.aspx");
+            }
+
+
         }
 
         protected void BtnCrear(object sender, EventArgs e)
@@ -70,33 +69,39 @@ namespace HBRPractica.Vistas.Categorias
         }
 
 
-
-        protected void BtnBorrar(object sender, EventArgs e)
+        protected void GridviewCategoria_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //Conexión con la base de datos
-            SqlConnection conexion = new Conexion().Connection();
-            conexion.Open();
+            if (e.CommandName == "btnEditar")
+            {
+                int index = Convert.ToInt32(e.CommandArgument.ToString());
 
-            //Implementación con la clase ServiciosCategorías
-            HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
-            servicios.borrarCategoria(Convert.ToInt32(elementoID.Value), conexion, "CRUDCategoria");
+                GridViewRow row = GridviewCategoria.Rows[index];
+                string[] datosCategoria = new string[] { row.Cells[0].Text, row.Cells[1].Text, row.Cells[2].Text};
 
-
-            conexion.Close();
-
-            Response.Redirect("~/Vistas/Categorias/Lista.aspx");
-        }
-
-        protected void BtnEditar(object sender, EventArgs e)
-        {
-            string[] datos = elementoID.Value.Split('♥');
-
-            ViewState["id"] = datos[0];
-            ViewState["nombre"] = datos[1];
-            ViewState["descripcion"] = datos[2];
+                Session["editarCategoria"] = datosCategoria;
 
 
-            Response.Redirect("~/Vistas/Categorias/Editar.aspx");
+                Response.Redirect("~/Vistas/Categorias/Editar.aspx");
+            }
+            else if (e.CommandName == "btnBorrar")
+            {
+                int index = Convert.ToInt32(e.CommandArgument.ToString());
+
+                GridViewRow row = GridviewCategoria.Rows[index];
+
+                //Conexión a la base de datos.
+                SqlConnection conexion = new Conexion().Connection();
+                conexion.Open();
+
+                //Implementación con la clase SericiosCategorias
+                Services.SericiosCategorias servicios = new Services.SericiosCategorias();
+                servicios.borrarCategoria(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDCategoria");
+
+                conexion.Close();
+
+                Response.Redirect("~/Vistas/Categorias/Lista.aspx");
+
+            }
         }
     }
 }

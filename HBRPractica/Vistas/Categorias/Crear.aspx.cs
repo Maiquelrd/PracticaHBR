@@ -23,7 +23,7 @@ namespace HBRPractica.Vistas.Categorias
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
 
             }

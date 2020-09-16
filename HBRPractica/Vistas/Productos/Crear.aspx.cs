@@ -29,7 +29,7 @@ namespace HBRPractica.Vistas.Productos
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
 
             }
@@ -48,8 +48,8 @@ namespace HBRPractica.Vistas.Productos
             SqlConnection conexion = new Conexion().Connection();
             conexion.Open();
 
-            //Implementación con la clase ServiciosVarios
-            HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
+            //Implementación con la clase ServiciosProductos
+            Services.ServiciosProductos servicios = new Services.ServiciosProductos();
 
 
             bool respuesta = servicios.crearProducto(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(Request.Form["inputIdCat"]), Convert.ToDecimal(inputPrecio.Value), conexion, "CRUDProducto");

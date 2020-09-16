@@ -16,39 +16,71 @@ namespace HBRPractica.Vistas.Productos
         protected void Page_Load(object sender, EventArgs e)
         {
 
-           if(Session["autenticacion"] != null )
+
+            if (Session["autenticacion"] != null)
             {
-                if(Session["autenticacion"].ToString() == "Administrador")
+                if (Session["autenticacion"].ToString() == "Administrador")
                 {
-                    //Implementación con la clase ServiciosVarios
-                    HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
 
-                    //Conexión con la base de datos
-                    SqlConnection conexion = new Conexion().Connection();
-
-                    using (conexion)
+                    if (!Page.IsPostBack)
                     {
-                        using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
+
+                        //Conexión con la base de datos
+                        SqlConnection conexion = new Conexion().Connection();
+                        using (conexion)
                         {
-                            cmd.Connection = conexion;
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.AddWithValue("@tipo", "Select");
-                            using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                            using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
                             {
-                                DataTable dt = new DataTable();
-                                sda.Fill(dt);
+                                cmd.Connection = conexion;
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@tipo", "Select");
+                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                {
+                                    DataTable dt = new DataTable();
+                                    sda.Fill(dt);
 
-                                StringBuilder html = servicios.obtenerTablaAdministrador(dt);
+                                    GridviewProductos.DataSource = dt;
+                                    GridviewProductos.DataBind();
 
-                                PlaceHolderProductos.Controls.Add(new Literal { Text = html.ToString() });
+                                }
                             }
                         }
                     }
+
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    if (!Page.IsPostBack)
+                    {
+
+                        //Conexión con la base de datos
+                        SqlConnection conexion = new Conexion().Connection();
+                        using (conexion)
+                        {
+                            using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
+                            {
+                                cmd.Connection = conexion;
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@tipo", "Select");
+                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                {
+                                    DataTable dt = new DataTable();
+                                    sda.Fill(dt);
+
+                                    GridviewProductos.DataSource = dt;
+                                    GridviewProductos.DataBind();
+
+                                }
+                            }
+                        }
+
+
+                        GridviewProductos.Columns[5].Visible = false;
+                        GridviewProductos.Columns[6].Visible = false;
+
+                    }
                 }
+
             }
             else
             {
@@ -66,34 +98,39 @@ namespace HBRPractica.Vistas.Productos
         }
 
 
-
-        protected void BtnBorrar(object sender, EventArgs e)
+        protected void GridviewUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //Conexión a la base de datos.
-            SqlConnection conexion = new Conexion().Connection();
-            conexion.Open();
+            if (e.CommandName == "btnEditar")
+            {
+                int index = Convert.ToInt32(e.CommandArgument.ToString());
 
-            //Implementación con la clase ServiciosProductos
-            HBRPractica.Services.ServiciosProductos servicios = new HBRPractica.Services.ServiciosProductos();
-            servicios.borrarProducto(Convert.ToInt32(elementoID.Value), conexion, "CRUDProducto");
+                GridViewRow row = GridviewProductos.Rows[index];
+                string[] datosProducto = new string[] { row.Cells[0].Text, row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text };
 
-            conexion.Close();
-
-            Response.Redirect("~/Vistas/Productos/Lista.aspx");
-        }
-
-        protected void BtnEditar(object sender, EventArgs e)
-        {
-            string[] datos = elementoID.Value.Split('♥');
-
-            ViewState["id"] = datos[0];
-            ViewState["idcat"] = datos[1];
-            ViewState["nombre"] = datos[2];
-            ViewState["descripcion"] = datos[3];
-            ViewState["precio"] = datos[4];
+                Session["editarProducto"] = datosProducto;
 
 
-            Response.Redirect("~/Vistas/Productos/Editar.aspx");
+                Response.Redirect("~/Vistas/Productos/Editar.aspx");
+            }
+            else if (e.CommandName == "btnBorrar")
+            {
+                int index = Convert.ToInt32(e.CommandArgument.ToString());
+
+                GridViewRow row = GridviewProductos.Rows[index];
+
+                //Conexión a la base de datos.
+                SqlConnection conexion = new Conexion().Connection();
+                conexion.Open();
+
+                //Implementación con la clase ServiciosProductos
+                Services.ServiciosProductos servicios = new Services.ServiciosProductos();
+                servicios.borrarProducto(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDProducto");
+
+                conexion.Close();
+
+                Response.Redirect("~/Vistas/Productos/Lista.aspx");
+
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace HBRPractica.Vistas.Login
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
 
             }

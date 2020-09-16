@@ -19,16 +19,20 @@ namespace HBRPractica.Vistas.Categorias
             {
                 if (Session["autenticacion"].ToString() == "Administrador")
                 {
+
                     if (!Page.IsPostBack)
                     {
-                        inputID.Value = ViewState["id"].ToString();
-                        inputNombre.Value = ViewState["nombre"].ToString();
-                        inputDescripcion.Value = ViewState["descripcion"].ToString();
+                        string[] datosCategorias = Session["editarCategoria"] as string[];
+
+                        inputID.Value = datosCategorias[0].ToString();
+                        inputNombre.Value = datosCategorias[1].ToString();
+                        inputDescripcion.Value = datosCategorias[2].ToString();
+      
                     }
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
 
             }
@@ -48,8 +52,8 @@ namespace HBRPractica.Vistas.Categorias
             SqlConnection conexion = new Conexion().Connection();
             conexion.Open();
 
-            //Implementación con la clase ServiciosVarios
-            HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
+            //Implementación con la clase SericiosCategorias
+            Services.SericiosCategorias servicios = new Services.SericiosCategorias();
 
 
             bool respuesta = servicios.editarCategoria(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), conexion, "CRUDCategoria");

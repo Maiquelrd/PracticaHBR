@@ -30,7 +30,7 @@ namespace HBRPractica
             conexion.Open();
 
             //Implementación con la clase ServiciosLogin
-            HBRPractica.Services.ServiciosLogin servicios = new HBRPractica.Services.ServiciosLogin();
+            Services.ServiciosLogin servicios = new Services.ServiciosLogin();
             int resultadoUsuario = servicios.getUsuario<int>(login.Text, password.Text, conexion, "ProcLoguear");
 
 
@@ -45,7 +45,7 @@ namespace HBRPractica
                 else
                 {
                     Session["autenticacion"] = "Usuario";
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
             }
             else

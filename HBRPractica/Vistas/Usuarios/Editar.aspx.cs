@@ -30,7 +30,7 @@ namespace HBRPractica.Vistas.Usuarios
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
                 }
 
             }

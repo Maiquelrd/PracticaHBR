@@ -34,7 +34,7 @@
                     <div style="height:30px"></div>
                     <div class="table-responsive" runat="server">  
                         <asp:PlaceHolder  ID = "PlaceHolderUsuarios" runat="server" />
-                        <asp:GridView ID="GridviewUsuarios" runat="server" AutoGenerateColumns="false" onrowcommand="GridviewUsuarios_RowCommand" DataKeyNames="ID">
+                        <asp:GridView ID="GridviewUsuarios" runat="server" AutoGenerateColumns="false" onrowcommand="GridviewUsuarios_RowCommand" CssClass="table table-condensed table-hover" UseAccessibleHeader="true"  >
                             <Columns>
                                 <asp:BoundField DataField="ID" HeaderText="ID" />
                                 <asp:BoundField DataField="Usuario" HeaderText="Usuario" />

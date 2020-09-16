@@ -16,6 +16,28 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+    <style>
+
+        .table-condensed tr th {
+        border: 0px solid #6e7bd9;
+        color: white;
+        background-color: #6e7bd9;
+        }
+
+        .table-condensed, .table-condensed tr td {
+        border: 0px solid #000;
+        }
+
+        tr:nth-child(even) {
+        background: #f8f7ff
+        }
+
+        tr:nth-child(odd) {
+        background: #fff;
+        }
+
+    </style>
+
 </head>
 <body>
     <form runat="server">

@@ -17,14 +17,6 @@
       
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/datatable/bootstrap/css/bootstrap.min.css"/>
-    <!-- CSS personalizado --> 
-    <link rel="stylesheet" href="~/datatable/main.css"/>  
-      
-      
-    <!--datables CSS básico-->
-    <link rel="stylesheet" type="text/css" href="~/datatable/datatables/datatables.min.css"/>
-    <!--datables estilo bootstrap 4 CSS-->  
-    <link rel="stylesheet"  type="text/css" href="~/datatable/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"/>
 
 </head>
 <body>
@@ -37,43 +29,37 @@
 
 
     <form runat="server">
-        <asp:ScriptManager runat="server"
-       ID="ScriptManager1" 
-       EnablePageMethods="true"
-       EnablePartialRendering="true"/>
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <asp:Button type="button" class="btn btn-success" Text="Crear" runat="server" OnClick="BtnCrear"></asp:Button>
-                <div style="height:30px"></div>
-                <div class="table-responsive" runat="server">  
-                    <asp:PlaceHolder  ID = "PlaceHolderProductos" runat="server" />
-                    <div style="display: none;">
-                        <asp:Button type="button" ID="botonBorrar" runat="server" class="btn btn-primary" onclick="BtnBorrar"></asp:Button>
-                         <asp:Button type="button" ID="botonEditar" runat="server" class="btn btn-primary" onclick="BtnEditar"></asp:Button>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <asp:Button type="button" class="btn btn-success" Text="Crear" runat="server" OnClick="BtnCrear"></asp:Button>
+                    <div style="height:30px"></div>
+                    <div class="table-responsive" runat="server">  
+                        <asp:PlaceHolder  ID = "PlaceHolderUsuarios" runat="server" />
+                        <asp:GridView ID="GridviewProductos" runat="server" AutoGenerateColumns="false" onrowcommand="GridviewUsuarios_RowCommand" CssClass="table table-condensed table-hover" UseAccessibleHeader="true"  >
+                            <Columns>
+                                <asp:BoundField DataField="ID" HeaderText="ID" />
+                                <asp:BoundField DataField="ID_Categoria" HeaderText="Categoría" />
+                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                                <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+                                <asp:BoundField DataField="Precio" HeaderText="Precio" />
+                                <asp:TemplateField HeaderText="Editar producto">
+                                    <ItemTemplate>
+                                        <asp:Button runat="server" ID="botonEditar" class="btn btn-warning" Text="Editar" CommandName="btnEditar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField  HeaderText="Borrar producto">
+                                    <ItemTemplate>
+                                        <asp:Button runat="server" ID="botonBorrar" class="btn btn-danger" Text="Borrar" CommandName="btnBorrar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
                     </div>
-                    <asp:HiddenField ID="elementoID" runat="server"></asp:HiddenField>  
                 </div>
             </div>
-        </div>
-    </div>  
-
-        <!-- Scripts necesarios para que funcionen los botones de borrar y editar autogenerados -->
-        <script type="text/javascript">
-       
-            function Borrar(id) {
-                var button = document.getElementById('botonBorrar');
-                document.getElementById('elementoID').value = id;
-                button.click();
-            }
-            function Editar(id) {
-                var button = document.getElementById('botonEditar');
-                document.getElementById('elementoID').value = id;
-                button.click();
-            }
-        </script>
-        </form>
+        </div>  
+    </form>
    
     
       

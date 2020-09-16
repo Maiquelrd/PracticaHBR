@@ -15,48 +15,21 @@ namespace HBRPractica.Vistas.Productos
     {
 
         /// <summary>
-        /// Control ScriptManager1.
+        /// Control PlaceHolderUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderUsuarios;
 
         /// <summary>
-        /// Control PlaceHolderProductos.
+        /// Control GridviewProductos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderProductos;
-
-        /// <summary>
-        /// Control botonBorrar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button botonBorrar;
-
-        /// <summary>
-        /// Control botonEditar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button botonEditar;
-
-        /// <summary>
-        /// Control elementoID.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField elementoID;
+        protected global::System.Web.UI.WebControls.GridView GridviewProductos;
     }
 }

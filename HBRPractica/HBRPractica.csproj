@@ -137,7 +137,6 @@
     <Content Include="Vistas\NavBar.ascx" />
     <Content Include="Vistas\Productos\Crear.aspx" />
     <Content Include="Vistas\Productos\Editar.aspx" />
-    <Content Include="Vistas\Productos\ListaUser.aspx" />
     <Content Include="Vistas\Usuarios\Crear.aspx" />
     <Content Include="Vistas\Login\Login.aspx" />
     <Content Include="Vistas\Login\logincss.css" />
@@ -237,13 +236,6 @@
     </Compile>
     <Compile Include="Vistas\Productos\Editar.aspx.designer.cs">
       <DependentUpon>Editar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Productos\ListaUser.aspx.cs">
-      <DependentUpon>ListaUser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vistas\Productos\ListaUser.aspx.designer.cs">
-      <DependentUpon>ListaUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Usuarios\Crear.aspx.cs">
       <DependentUpon>Crear.aspx</DependentUpon>

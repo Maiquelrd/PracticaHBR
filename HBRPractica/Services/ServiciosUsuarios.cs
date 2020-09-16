@@ -12,45 +12,6 @@ namespace HBRPractica.Services
     public class ServiciosUsuarios
     {
  
-        public StringBuilder obtenerTablaAdministrador(DataTable dt)
-        {
-            StringBuilder html = new StringBuilder();
-
-            //Inicio de la tabla
-            html.Append("<table id='example' class='table table-striped table-bordered' style='width:100%' runat='server'>\n");
-
-            //Construyendo el header de la tabla
-            html.Append("<thead>\n");
-            html.Append("<tr>\n");
-            foreach (DataColumn column in dt.Columns)
-            {
-                html.Append("<th>" + column.ColumnName + "</th>\n");
-            }
-            html.Append("<th> Editar </th>\n");
-            html.Append("<th> Eliminar </th>\n");
-            html.Append("</tr>\n");
-            html.Append("</thead>\n");
-            html.Append("<tbody>\n");
-
-
-            //Poniendo los datos
-            foreach (DataRow row in dt.Rows)
-            {
-                html.Append("<tr>\n");
-                foreach (DataColumn column in dt.Columns)
-                {
-                    html.Append("<td>" + row[column.ColumnName] + "</td>\n");
-                }
-                html.Append("<td><button type='button' class='btn btn-warning' id='" + row[0] + "♥" + row[1] + "♥" + row[2] + "♥" + row[3] + "' onclick='Editar(this.id)' >Editar</button></td>\n");
-                html.Append("<td><button type='button' class='btn btn-danger'  id='" + row[0] + "' onclick='Borrar(this.id)' >Eliminar</Button></td>\n");
-                html.Append("</tr>\n");
-            }
-
-            //Cerrando la tabla
-            html.Append("</tbody>\n");
-            html.Append("</table>\n");
-            return html;
-        }
 
         public bool crearUsuario(string usuario, string password, System.Web.UI.HtmlControls.HtmlInputCheckBox esAdmin, SqlConnection conn, string procedure)
         {
