@@ -17,48 +17,51 @@ namespace HBRPractica.Vistas.Categorias
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["autenticacion"] != null)
+            if(!Page.IsPostBack)
             {
-                if (Session["autenticacion"].ToString() == "Administrador")
+
+                if (Session["autenticacion"] != null)
                 {
-                    //Implementación con la clase ServiciosCategorias
-                    HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
-
-                    //Conexión con la base de datos
-                    SqlConnection conexion = new Conexion().Connection();
-                    using (conexion)
+                    if (Session["autenticacion"].ToString() == "Administrador")
                     {
-                        using (SqlCommand cmd = new SqlCommand("CRUDCategoria"))
+                        //Implementación con la clase ServiciosCategorias
+                        HBRPractica.Services.SericiosCategorias servicios = new HBRPractica.Services.SericiosCategorias();
+
+                        //Conexión con la base de datos
+                        SqlConnection conexion = new Conexion().Connection();
+                        using (conexion)
                         {
-                            cmd.Connection = conexion;
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.AddWithValue("@tipo", "Select");
-                            using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                            using (SqlCommand cmd = new SqlCommand("CRUDCategoria"))
                             {
-                                DataTable dt = new DataTable();
-                                sda.Fill(dt);
+                                cmd.Connection = conexion;
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@tipo", "Select");
+                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                {
+                                    DataTable dt = new DataTable();
+                                    sda.Fill(dt);
 
-                                StringBuilder html = servicios.obtenerTablaAdministrador(dt);
+                                    StringBuilder html = servicios.obtenerTablaAdministrador(dt);
 
-                                PlaceHolderCategoria.Controls.Add(new Literal { Text = html.ToString() });
+                                    PlaceHolderCategoria.Controls.Add(new Literal { Text = html.ToString() });
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    }
+
                 }
                 else
                 {
-                    Response.Redirect("~/Vistas/Productos/ListaUser.aspx");
+                    Response.Redirect("~/Vistas/Login/Login.aspx");
                 }
 
+
+
             }
-            else
-            {
-                Response.Redirect("~/Vistas/Login/Login.aspx");
-            }
-
-            
-
-
         }
 
         protected void BtnCrear(object sender, EventArgs e)

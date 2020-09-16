@@ -38,8 +38,8 @@ namespace HBRPractica.Vistas.Login
             SqlConnection conexion = new Conexion().Connection();
             conexion.Open();
 
-            //Implementación con la clase ServiciosVarios
-            HBRPractica.Services.ServiciosUsuarios servicios = new HBRPractica.Services.ServiciosUsuarios();
+            //Implementación con la clase ServiciosUsuarios
+            Services.ServiciosUsuarios servicios = new Services.ServiciosUsuarios();
 
 
             bool respuesta = servicios.crearUsuario(inputUser.Value, inputPassword.Value, checkAdmin, conexion, "CRUDUsuario");

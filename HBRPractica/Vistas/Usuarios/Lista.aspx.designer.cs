@@ -15,15 +15,6 @@ namespace HBRPractica.Vistas.Usuarios
     {
 
         /// <summary>
-        /// Control ScriptManager1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
-
-        /// <summary>
         /// Control PlaceHolderUsuarios.
         /// </summary>
         /// <remarks>
@@ -33,30 +24,12 @@ namespace HBRPractica.Vistas.Usuarios
         protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderUsuarios;
 
         /// <summary>
-        /// Control botonBorrar.
+        /// Control GridviewUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button botonBorrar;
-
-        /// <summary>
-        /// Control botonEditar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button botonEditar;
-
-        /// <summary>
-        /// Control elementoID.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField elementoID;
+        protected global::System.Web.UI.WebControls.GridView GridviewUsuarios;
     }
 }

@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI;
@@ -25,29 +26,32 @@ namespace HBRPractica.Vistas.Usuarios
             {
                 if (Session["autenticacion"].ToString() == "Administrador")
                 {
-                    //Implementación con la clase ServiciosVarios
-                    HBRPractica.Services.ServiciosUsuarios servicios = new HBRPractica.Services.ServiciosUsuarios();
 
-                    //Conexión con la base de datos
-                    SqlConnection conexion = new Conexion().Connection();
-                    using (conexion)
+                    if (!Page.IsPostBack)
                     {
-                        using (SqlCommand cmd = new SqlCommand("CRUDUsuario"))
+
+                        //Conexión con la base de datos
+                        SqlConnection conexion = new Conexion().Connection();
+                        using (conexion)
                         {
-                            cmd.Connection = conexion;
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.AddWithValue("@tipo", "Select");
-                            using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                            using (SqlCommand cmd = new SqlCommand("CRUDUsuario"))
                             {
-                                DataTable dt = new DataTable();
-                                sda.Fill(dt);
+                                cmd.Connection = conexion;
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@tipo", "Select");
+                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                {
+                                    DataTable dt = new DataTable();
+                                    sda.Fill(dt);
 
-                                StringBuilder html = servicios.obtenerTablaAdministrador(dt);
+                                    GridviewUsuarios.DataSource = dt;
+                                    GridviewUsuarios.DataBind();
 
-                                PlaceHolderUsuarios.Controls.Add(new Literal { Text = html.ToString() });
+                                }
                             }
                         }
                     }
+                    
                 }
                 else
                 {
@@ -71,35 +75,39 @@ namespace HBRPractica.Vistas.Usuarios
         }
 
 
-
-        protected void BtnBorrar(object sender, EventArgs e)
+        protected void GridviewUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //Conexión a la base de datos.
-            SqlConnection conexion = new Conexion().Connection();
-            conexion.Open();
+            if (e.CommandName == "btnEditar")
+            {
+                int index = Convert.ToInt32(e.CommandArgument.ToString());
 
-            //Implementación con la clase ServiciosUsuarios
-            HBRPractica.Services.ServiciosUsuarios servicios = new HBRPractica.Services.ServiciosUsuarios();
-            servicios.borrarUsuario(Convert.ToInt32(elementoID.Value), conexion, "CRUDUsuario");
+                GridViewRow row = GridviewUsuarios.Rows[index];
+                string[] datosUsuario = new string[] { row.Cells[0].Text, row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text };
 
-            conexion.Close();
+                Session["editarUsuario"] = datosUsuario;
 
-            Response.Redirect("~/Vistas/Usuarios/Lista.aspx");
+
+                Response.Redirect("~/Vistas/Usuarios/Editar.aspx");
+            }
+            else if (e.CommandName == "btnBorrar")
+            {
+                int index = Convert.ToInt32(e.CommandArgument.ToString());
+
+                GridViewRow row = GridviewUsuarios.Rows[index];
+
+                //Conexión a la base de datos.
+                SqlConnection conexion = new Conexion().Connection();
+                conexion.Open();
+
+                //Implementación con la clase ServiciosUsuarios
+                Services.ServiciosUsuarios servicios = new Services.ServiciosUsuarios();
+                servicios.borrarUsuario(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDUsuario");
+
+                conexion.Close();
+
+                Response.Redirect("~/Vistas/Usuarios/Lista.aspx");
+
+            }
         }
-
-        protected void BtnEditar(object sender, EventArgs e)
-        {
-            string[] datos = elementoID.Value.Split('♥');
-
-            ViewState["id"] = datos[0];
-            ViewState["usuario"] = datos[1];
-            ViewState["contraseña"] = datos[2];
-            ViewState["admin"] = datos[3];
-
-
-            Response.Redirect("~/Vistas/Usuarios/Editar.aspx");
-        }
-
-
     }
 }
