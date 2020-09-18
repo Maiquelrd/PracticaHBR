@@ -31,15 +31,28 @@
     <form runat="server">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <asp:Button type="button" class="btn btn-success" Text="Crear" runat="server" OnClick="BtnCrear"></asp:Button>
+                <div class="col-lg-12">            
+                    <asp:Button type="button" ID="BotonCrear" class="btn btn-success" Text="Crear" runat="server" OnClick="BtnCrear" Width="181px"></asp:Button>
+                    <div style="height:30px"></div>
+                    <div class="input-group mb-3">
+                      <asp:Textbox runat="server" ID="FiltroNombre" type="text" class="form-control" placeholder="Filtrar por nombre" aria-label="Filtrar" aria-describedby="basic-addon2"></asp:Textbox>
+                      <div class="input-group-append">
+                        <asp:Button runat="server" class="btn btn-outline-secondary" type="button" Text="Filtrar" OnClick="FiltrarPorNombre"></asp:Button>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <asp:Textbox runat="server" ID="FiltroCategoria" type="text" class="form-control" placeholder="Filtrar por categoria" aria-label="Filtrar" aria-describedby="basic-addon2"></asp:Textbox>
+                      <div class="input-group-append">
+                        <asp:Button runat="server" class="btn btn-outline-secondary" type="button" Text="Filtrar" OnClick="FiltrarPorCategoria"></asp:Button>
+                      </div>
+                    </div>
                     <div style="height:30px"></div>
                     <div class="table-responsive" runat="server">  
-                        <asp:PlaceHolder  ID = "PlaceHolderUsuarios" runat="server" />
                         <asp:GridView ID="GridviewProductos" runat="server" AutoGenerateColumns="false" onrowcommand="GridviewUsuarios_RowCommand" CssClass="table table-condensed table-hover" UseAccessibleHeader="true"  >
                             <Columns>
                                 <asp:BoundField DataField="ID" HeaderText="ID" />
-                                <asp:BoundField DataField="ID_Categoria" HeaderText="Categoría" />
+                                <asp:BoundField DataField="ID_Categoria" HeaderText="ID de la categoria" />
+                                <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
                                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                                 <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
                                 <asp:BoundField DataField="Precio" HeaderText="Precio" />
@@ -61,19 +74,6 @@
         </div>  
     </form>
    
-    
-      
-       
-
-     <!-- jQuery, Popper.js, Bootstrap JS -->
-    <script src="<%=ResolveUrl("~/datatable/jquery/jquery-3.3.1.min.js") %>"></script>
-    <script src="<%=ResolveUrl("~/datatable/popper/popper.min.js") %>"></script>
-    <script src="<%=ResolveUrl("~/datatable/bootstrap/js/bootstrap.min.js") %>"></script>
-
-    <!-- datatables JS -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/datatable/datatables/datatables.min.js") %>"></script>    
-     
-    <script type="text/javascript" src="<%=ResolveUrl("~/datatable/main.js") %>"></script>  
 
 </body>
 </html>

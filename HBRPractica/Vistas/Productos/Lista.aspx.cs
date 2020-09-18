@@ -13,6 +13,9 @@ namespace HBRPractica.Vistas.Productos
 {
     public partial class Lista : System.Web.UI.Page
     {
+
+        DataTable dt = new DataTable();
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -25,26 +28,7 @@ namespace HBRPractica.Vistas.Productos
                     if (!Page.IsPostBack)
                     {
 
-                        //Conexión con la base de datos
-                        SqlConnection conexion = new Conexion().Connection();
-                        using (conexion)
-                        {
-                            using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
-                            {
-                                cmd.Connection = conexion;
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                cmd.Parameters.AddWithValue("@tipo", "Select");
-                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                                {
-                                    DataTable dt = new DataTable();
-                                    sda.Fill(dt);
-
-                                    GridviewProductos.DataSource = dt;
-                                    GridviewProductos.DataBind();
-
-                                }
-                            }
-                        }
+                        LoadData();
                     }
 
                 }
@@ -53,30 +37,10 @@ namespace HBRPractica.Vistas.Productos
                     if (!Page.IsPostBack)
                     {
 
-                        //Conexión con la base de datos
-                        SqlConnection conexion = new Conexion().Connection();
-                        using (conexion)
-                        {
-                            using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
-                            {
-                                cmd.Connection = conexion;
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                cmd.Parameters.AddWithValue("@tipo", "Select");
-                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                                {
-                                    DataTable dt = new DataTable();
-                                    sda.Fill(dt);
-
-                                    GridviewProductos.DataSource = dt;
-                                    GridviewProductos.DataBind();
-
-                                }
-                            }
-                        }
-
-
+                        LoadData();
                         GridviewProductos.Columns[5].Visible = false;
                         GridviewProductos.Columns[6].Visible = false;
+                        BotonCrear.Visible = false;
 
                     }
                 }
@@ -88,6 +52,29 @@ namespace HBRPractica.Vistas.Productos
             }
 
 
+        }
+
+        private void LoadData()
+        {
+            //Conexión con la base de datos
+            SqlConnection conexion = new Conexion().Connection();
+            using (conexion)
+            {
+                using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
+                {
+                    cmd.Connection = conexion;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@tipo", "SelectCat");
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        sda.Fill(dt);
+
+                        GridviewProductos.DataSource = dt;
+                        GridviewProductos.DataBind();
+
+                    }
+                }
+            }
         }
 
         protected void BtnCrear(object sender, EventArgs e)
@@ -105,7 +92,7 @@ namespace HBRPractica.Vistas.Productos
                 int index = Convert.ToInt32(e.CommandArgument.ToString());
 
                 GridViewRow row = GridviewProductos.Rows[index];
-                string[] datosProducto = new string[] { row.Cells[0].Text, row.Cells[1].Text, row.Cells[2].Text, row.Cells[3].Text, row.Cells[4].Text };
+                string[] datosProducto = new string[] { row.Cells[0].Text, row.Cells[1].Text, row.Cells[3].Text, row.Cells[4].Text, row.Cells[5].Text };
 
                 Session["editarProducto"] = datosProducto;
 
@@ -131,6 +118,30 @@ namespace HBRPractica.Vistas.Productos
                 Response.Redirect("~/Vistas/Productos/Lista.aspx");
 
             }
+        }
+
+        protected void FiltrarPorNombre(object sender, EventArgs e)
+        {
+            LoadData();
+            if(FiltroNombre.Text != "")
+            {
+                DataView dv = new DataView(dt, "Nombre LIKE'%" + FiltroNombre.Text + "%'", "Nombre desc", DataViewRowState.CurrentRows);
+                GridviewProductos.DataSource = dv;
+                GridviewProductos.DataBind();
+            }
+           
+        }
+
+        protected void FiltrarPorCategoria(object sender, EventArgs e)
+        {
+            LoadData();
+            if (FiltroCategoria.Text != "")
+            {
+                DataView dv = new DataView(dt, "Categoria LIKE'%" + FiltroCategoria.Text + "%'", "Categoria desc", DataViewRowState.CurrentRows);
+                GridviewProductos.DataSource = dv;
+                GridviewProductos.DataBind();
+            }
+
         }
     }
 }
