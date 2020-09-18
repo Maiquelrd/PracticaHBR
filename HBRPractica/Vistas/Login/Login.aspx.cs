@@ -31,13 +31,13 @@ namespace HBRPractica
 
             //Implementación con la clase ServiciosLogin
             Services.ServiciosLogin servicios = new Services.ServiciosLogin();
-            int resultadoUsuario = servicios.getUsuario<int>(login.Text, password.Text, conexion, "ProcLoguear");
+            int resultadoUsuario = servicios.getUsuario<int>(login.Text.ToLower(), password.Text, conexion, "ProcLoguear");
 
 
             if(resultadoUsuario >= 1)
             {
-                bool resultado2 = servicios.getUsuario<bool>(login.Text, password.Text, conexion, "ValidarAdmin");
-                if (resultado2 == true)
+                bool esAdmin = servicios.getUsuario<bool>(login.Text.ToLower(), password.Text, conexion, "ValidarAdmin");
+                if (esAdmin == true)
                 {
                     Session["autenticacion"] = "Administrador";
                     Response.Redirect("~/Vistas/Productos/Lista.aspx");

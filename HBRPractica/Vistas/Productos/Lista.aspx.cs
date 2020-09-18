@@ -38,8 +38,9 @@ namespace HBRPractica.Vistas.Productos
                     {
 
                         LoadData();
-                        GridviewProductos.Columns[5].Visible = false;
+                        GridviewProductos.Columns[1].Visible = false;
                         GridviewProductos.Columns[6].Visible = false;
+                        GridviewProductos.Columns[7].Visible = false;
                         BotonCrear.Visible = false;
 
                     }
