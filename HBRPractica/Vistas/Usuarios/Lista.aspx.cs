@@ -29,29 +29,35 @@ namespace HBRPractica.Vistas.Usuarios
 
                     if (!Page.IsPostBack)
                     {
-
-                        //Conexión con la base de datos
-                        SqlConnection conexion = new Conexion().Connection();
-                        using (conexion)
+                        try
                         {
-                            using (SqlCommand cmd = new SqlCommand("CRUDUsuario"))
+                            //Conexión con la base de datos
+                            SqlConnection conexion = new Conexion().Connection();
+                            using (conexion)
                             {
-                                cmd.Connection = conexion;
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                cmd.Parameters.AddWithValue("@tipo", "Select");
-                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                using (SqlCommand cmd = new SqlCommand("CRUDUsuario"))
                                 {
-                                    DataTable dt = new DataTable();
-                                    sda.Fill(dt);
+                                    cmd.Connection = conexion;
+                                    cmd.CommandType = CommandType.StoredProcedure;
+                                    cmd.Parameters.AddWithValue("@tipo", "Select");
+                                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                    {
+                                        DataTable dt = new DataTable();
+                                        sda.Fill(dt);
 
-                                    GridviewUsuarios.DataSource = dt;
-                                    GridviewUsuarios.DataBind();
+                                        GridviewUsuarios.DataSource = dt;
+                                        GridviewUsuarios.DataBind();
 
+                                    }
                                 }
                             }
+
                         }
-                    }
-                    
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                    }                    
                 }
                 else
                 {
@@ -91,22 +97,30 @@ namespace HBRPractica.Vistas.Usuarios
             }
             else if (e.CommandName == "btnBorrar")
             {
-                int index = Convert.ToInt32(e.CommandArgument.ToString());
+                try
+                {
 
-                GridViewRow row = GridviewUsuarios.Rows[index];
+                    int index = Convert.ToInt32(e.CommandArgument.ToString());
 
-                //Conexión a la base de datos.
-                SqlConnection conexion = new Conexion().Connection();
-                conexion.Open();
+                    GridViewRow row = GridviewUsuarios.Rows[index];
 
-                //Implementación con la clase ServiciosUsuarios
-                Services.ServiciosUsuarios servicios = new Services.ServiciosUsuarios();
-                servicios.borrarUsuario(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDUsuario");
+                    //Conexión a la base de datos.
+                    SqlConnection conexion = new Conexion().Connection();
+                    conexion.Open();
 
-                conexion.Close();
+                    //Implementación con la clase ServiciosUsuarios
+                    Services.ServiciosUsuarios servicios = new Services.ServiciosUsuarios();
+                    servicios.borrarUsuario(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDUsuario");
 
-                Response.Redirect("~/Vistas/Usuarios/Lista.aspx");
+                    conexion.Close();
 
+                    Response.Redirect("~/Vistas/Usuarios/Lista.aspx");
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
         }
     }

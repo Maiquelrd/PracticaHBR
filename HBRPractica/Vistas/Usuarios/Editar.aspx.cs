@@ -46,27 +46,36 @@ namespace HBRPractica.Vistas.Usuarios
 
         protected void BtnConfirmar(object sender, EventArgs e)
         {
-            //Conexión a la base de datos.
-            SqlConnection conexion = new Conexion().Connection();
-            conexion.Open();
 
-            //Implementación con la clase ServiciosUsuarios
-            Services.ServiciosUsuarios servicios = new Services.ServiciosUsuarios();
-
-
-            bool respuesta = servicios.editarUsuario(inputUser.Value, inputPassword.Value, checkAdmin, Convert.ToInt32(inputID.Value) , conexion, "CRUDUsuario");
-
-            conexion.Close();
-            if (respuesta)
+            try
             {
-                Response.Redirect("~/Vistas/Usuarios/Lista.aspx");
-            }
-            else
-            {
-                labelEstado.Text = "Ese usuario existe o hubo un error";
-            }
 
-            
+                //Conexión a la base de datos.
+                SqlConnection conexion = new Conexion().Connection();
+                conexion.Open();
+
+                //Implementación con la clase ServiciosUsuarios
+                Services.ServiciosUsuarios servicios = new Services.ServiciosUsuarios();
+
+
+                bool respuesta = servicios.editarUsuario(inputUser.Value, inputPassword.Value, checkAdmin, Convert.ToInt32(inputID.Value), conexion, "CRUDUsuario");
+
+                conexion.Close();
+                if (respuesta)
+                {
+                    Response.Redirect("~/Vistas/Usuarios/Lista.aspx");
+                }
+                else
+                {
+                    labelEstado.Text = "Ese usuario existe o hubo un error";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+  
         }
 
         protected void BtnVolver(object sender, EventArgs e)

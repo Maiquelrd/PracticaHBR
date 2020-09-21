@@ -39,7 +39,7 @@
                     <div class="form-group row">
                     <label for="inputUser" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-5">
-                        <input type="text"  class="form-control"  id="inputNombre" placeholder="Nombre de la categoria" maxlength="30" runat="server">
+                        <input type="text"  class="form-control"  id="inputNombre" placeholder="Nombre del producto" maxlength="30" runat="server">
                     </div>
                     </div>
                     <div class="form-group row">

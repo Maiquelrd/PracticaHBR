@@ -71,27 +71,34 @@ namespace HBRPractica.Vistas.Productos
 
         protected void BtnConfirmar(object sender, EventArgs e)
         {
-            //Conexión a la base de datos.
-            SqlConnection conexion = new Conexion().Connection();
-            conexion.Open();
-
-            //Implementación con la clase ServiciosProductos
-            Services.ServiciosProductos servicios = new Services.ServiciosProductos();
-
-
-            bool respuesta = servicios.editarProducto(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), Convert.ToInt32(Request.Form["inputIdCat"]),Convert.ToDecimal(inputPrecio.Value) , conexion, "CRUDProducto");
-
-            conexion.Close();
-            if (respuesta)
+            try
             {
-                Response.Redirect("~/Vistas/Productos/Lista.aspx");
-            }
-            else
+
+                //Conexión a la base de datos.
+                SqlConnection conexion = new Conexion().Connection();
+                conexion.Open();
+
+                //Implementación con la clase ServiciosProductos
+                Services.ServiciosProductos servicios = new Services.ServiciosProductos();
+
+
+                bool respuesta = servicios.editarProducto(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), Convert.ToInt32(Request.Form["inputIdCat"]), Convert.ToDecimal(inputPrecio.Value), conexion, "CRUDProducto");
+
+                conexion.Close();
+                if (respuesta)
+                {
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
+                }
+                else
+                {
+                    labelEstado.Text = "Ese usuario existe o hubo un error";
+                }
+
+            } catch (Exception ex)
             {
-                labelEstado.Text = "Ese usuario existe o hubo un error";
+                Console.WriteLine(ex);
             }
-
-
+            
         }
 
         protected void BtnVolver(object sender, EventArgs e)

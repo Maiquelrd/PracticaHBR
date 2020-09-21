@@ -26,26 +26,34 @@ namespace HBRPractica.Vistas.Categorias
                     if (!Page.IsPostBack)
                     {
 
-                        //Conexión con la base de datos
-                        SqlConnection conexion = new Conexion().Connection();
-                        using (conexion)
+                        try
                         {
-                            using (SqlCommand cmd = new SqlCommand("CRUDCategoria"))
+                            //Conexión con la base de datos
+                            SqlConnection conexion = new Conexion().Connection();
+                            using (conexion)
                             {
-                                cmd.Connection = conexion;
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                cmd.Parameters.AddWithValue("@tipo", "Select");
-                                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                using (SqlCommand cmd = new SqlCommand("CRUDCategoria"))
                                 {
-                                    DataTable dt = new DataTable();
-                                    sda.Fill(dt);
+                                    cmd.Connection = conexion;
+                                    cmd.CommandType = CommandType.StoredProcedure;
+                                    cmd.Parameters.AddWithValue("@tipo", "Select");
+                                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                                    {
+                                        DataTable dt = new DataTable();
+                                        sda.Fill(dt);
 
-                                    GridviewCategoria.DataSource = dt;
-                                    GridviewCategoria.DataBind();
+                                        GridviewCategoria.DataSource = dt;
+                                        GridviewCategoria.DataBind();
 
+                                    }
                                 }
                             }
+
                         }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }                      
                     }
 
                 }
@@ -85,21 +93,29 @@ namespace HBRPractica.Vistas.Categorias
             }
             else if (e.CommandName == "btnBorrar")
             {
-                int index = Convert.ToInt32(e.CommandArgument.ToString());
+                try
+                {
+                    int index = Convert.ToInt32(e.CommandArgument.ToString());
 
-                GridViewRow row = GridviewCategoria.Rows[index];
+                    GridViewRow row = GridviewCategoria.Rows[index];
 
-                //Conexión a la base de datos.
-                SqlConnection conexion = new Conexion().Connection();
-                conexion.Open();
+                    //Conexión a la base de datos.
+                    SqlConnection conexion = new Conexion().Connection();
+                    conexion.Open();
 
-                //Implementación con la clase SericiosCategorias
-                Services.SericiosCategorias servicios = new Services.SericiosCategorias();
-                servicios.borrarCategoria(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDCategoria");
+                    //Implementación con la clase SericiosCategorias
+                    Services.SericiosCategorias servicios = new Services.SericiosCategorias();
+                    servicios.borrarCategoria(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDCategoria");
 
-                conexion.Close();
+                    conexion.Close();
 
-                Response.Redirect("~/Vistas/Categorias/Lista.aspx");
+                    Response.Redirect("~/Vistas/Categorias/Lista.aspx");
+
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex);
+                }
 
             }
         }

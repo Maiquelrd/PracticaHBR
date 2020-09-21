@@ -46,13 +46,13 @@
                     <div class="form-group row">
                     <label for="inputUser" class="col-sm-2 col-form-label">Nombre</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control"  id="inputNombre" placeholder="Usuario" maxlength="30" runat="server">
+                        <input type="text" class="form-control"  id="inputNombre" placeholder="Nombre" maxlength="30" runat="server">
                     </div>
                     </div>
                     <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Descripcion</label>
                     <div class="col-sm-5">
-                       <input type="text" class="form-control" id="inputDescripcion" placeholder="Contraseña" runat="server">
+                       <input type="text" class="form-control" id="inputDescripcion" placeholder="Descipción" runat="server">
                     </div>
                     </div>
                     <div class="form-group row">

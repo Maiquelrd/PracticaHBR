@@ -57,25 +57,33 @@ namespace HBRPractica.Vistas.Productos
 
         private void LoadData()
         {
-            //Conexión con la base de datos
-            SqlConnection conexion = new Conexion().Connection();
-            using (conexion)
+            try
             {
-                using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
+                //Conexión con la base de datos
+                SqlConnection conexion = new Conexion().Connection();
+                using (conexion)
                 {
-                    cmd.Connection = conexion;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@tipo", "SelectCat");
-                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    using (SqlCommand cmd = new SqlCommand("CRUDProducto"))
                     {
-                        sda.Fill(dt);
+                        cmd.Connection = conexion;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@tipo", "SelectCat");
+                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        {
+                            sda.Fill(dt);
 
-                        GridviewProductos.DataSource = dt;
-                        GridviewProductos.DataBind();
+                            GridviewProductos.DataSource = dt;
+                            GridviewProductos.DataBind();
 
+                        }
                     }
                 }
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
         }
 
         protected void BtnCrear(object sender, EventArgs e)
@@ -102,21 +110,30 @@ namespace HBRPractica.Vistas.Productos
             }
             else if (e.CommandName == "btnBorrar")
             {
-                int index = Convert.ToInt32(e.CommandArgument.ToString());
+                try
+                {
 
-                GridViewRow row = GridviewProductos.Rows[index];
+                    int index = Convert.ToInt32(e.CommandArgument.ToString());
 
-                //Conexión a la base de datos.
-                SqlConnection conexion = new Conexion().Connection();
-                conexion.Open();
+                    GridViewRow row = GridviewProductos.Rows[index];
 
-                //Implementación con la clase ServiciosProductos
-                Services.ServiciosProductos servicios = new Services.ServiciosProductos();
-                servicios.borrarProducto(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDProducto");
+                    //Conexión a la base de datos.
+                    SqlConnection conexion = new Conexion().Connection();
+                    conexion.Open();
 
-                conexion.Close();
+                    //Implementación con la clase ServiciosProductos
+                    Services.ServiciosProductos servicios = new Services.ServiciosProductos();
+                    servicios.borrarProducto(Convert.ToInt32(row.Cells[0].Text), conexion, "CRUDProducto");
 
-                Response.Redirect("~/Vistas/Productos/Lista.aspx");
+                    conexion.Close();
+
+                    Response.Redirect("~/Vistas/Productos/Lista.aspx");
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
 
             }
         }

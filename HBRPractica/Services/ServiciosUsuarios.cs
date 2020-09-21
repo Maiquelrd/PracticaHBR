@@ -12,7 +12,6 @@ namespace HBRPractica.Services
     public class ServiciosUsuarios
     {
  
-
         public bool crearUsuario(string usuario, string password, System.Web.UI.HtmlControls.HtmlInputCheckBox esAdmin, SqlConnection conn, string procedure)
         {
             if ((usuario != "") && (password != ""))

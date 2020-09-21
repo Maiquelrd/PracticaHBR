@@ -48,27 +48,34 @@ namespace HBRPractica.Vistas.Categorias
 
         protected void BtnConfirmar(object sender, EventArgs e)
         {
-            //Conexión a la base de datos.
-            SqlConnection conexion = new Conexion().Connection();
-            conexion.Open();
-
-            //Implementación con la clase SericiosCategorias
-            Services.SericiosCategorias servicios = new Services.SericiosCategorias();
-
-
-            bool respuesta = servicios.editarCategoria(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), conexion, "CRUDCategoria");
-
-            conexion.Close();
-            if (respuesta)
+            try
             {
-                Response.Redirect("~/Vistas/Categorias/Lista.aspx");
+                //Conexión a la base de datos.
+                SqlConnection conexion = new Conexion().Connection();
+                conexion.Open();
+
+                //Implementación con la clase SericiosCategorias
+                Services.SericiosCategorias servicios = new Services.SericiosCategorias();
+
+
+                bool respuesta = servicios.editarCategoria(inputNombre.Value, inputDescripcion.Value, Convert.ToInt32(inputID.Value), conexion, "CRUDCategoria");
+
+                conexion.Close();
+                if (respuesta)
+                {
+                    Response.Redirect("~/Vistas/Categorias/Lista.aspx");
+                }
+                else
+                {
+                    labelEstado.Text = "Ese usuario existe o hubo un error";
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                labelEstado.Text = "Ese usuario existe o hubo un error";
+                Console.WriteLine(ex);
             }
-
-
+           
         }
 
         protected void BtnVolver(object sender, EventArgs e)
